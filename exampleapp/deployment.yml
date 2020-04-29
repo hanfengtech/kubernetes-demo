@@ -1,0 +1,38 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: myexpressappservice
+spec:
+  selector:
+    app: myexpressapp
+  ports:
+    - protocol: "TCP"
+        # Port accesssible inside cluster
+      port: 8081
+      # Port to forward to inside cluster
+      targetPort: 8080
+      # Port accessible outside cluster
+      nodePort: 30002
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: myappdeployment
+spec:
+  selector:
+    matchLabels:
+      app: myexpressapp
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: myexpressapp
+    spec:
+      containers:
+      - name: myexpressapp
+        image: andypliu/exampleapp:v1.0.0
+        ports:
+        - containerPort: 8080

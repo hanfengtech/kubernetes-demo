@@ -1,0 +1,38 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: helloworldservice
+spec:
+  selector:
+    app: hello-world
+  ports:
+    - protocol: "TCP"
+        # Port accesssible inside cluster
+      port: 8080
+      # Port to forward to inside cluster
+      targetPort: 80
+      # Port accessible outside cluster
+      nodePort: 30001
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: hello-world
+spec:
+  selector:
+    matchLabels:
+      app: hello-world 
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      containers:
+      - name: hello-world
+        image: tutum/hello-world
+        ports:
+        - containerPort: 80
