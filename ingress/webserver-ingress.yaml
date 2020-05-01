@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: web-ingress
+  namespace: default
+spec:
+  rules:
+  - host: my.example.com
+    http:
+      paths:
+      - backend:
+         serviceName: share-pod
+         servicePort: 80
+  - host: example.com
+    http:
+      paths:
+      - backend:
+          serviceName: web-service
+          servicePort: 80
+  - host: hello.example.com
+    http:
+      paths:
+      - backend:
+          serviceName: helloworldservice 
+          servicePort: 8080
