@@ -6,6 +6,8 @@ metadata:
 spec:
   selector:
     app: hello-world
+  externalIPs:
+    - 192.168.1.75
   ports:
     - protocol: "TCP"
         # Port accesssible inside cluster
@@ -13,7 +15,7 @@ spec:
       # Port to forward to inside cluster
       targetPort: 80
       # Port accessible outside cluster
-      nodePort: 30001
+      nodePort: 30008
   type: LoadBalancer
 
 ---
