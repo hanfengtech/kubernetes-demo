@@ -1,0 +1,7 @@
+kubectl expose deployment source-ip-app --name=nodeport --port=80 --target-port=8080 --type=NodePort
+
+NODEPORT=$(kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services nodeport)
+NODES=$(kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(@.type=="ExternalIP")].address }')
+
+kubectl patch svc nodeport -p '{"spec":{"externalTrafficPolicy":"Local"}}'
+

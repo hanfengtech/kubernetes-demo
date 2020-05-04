@@ -1,0 +1,3 @@
+kubectl expose deployment source-ip-app --name=loadbalancer --port=80 --target-port=8080 --type=LoadBalancer --external-ip=192.168.1.75
+
+kubectl patch svc loadbalancer -p '{"spec":{"externalTrafficPolicy":"Local"}}'

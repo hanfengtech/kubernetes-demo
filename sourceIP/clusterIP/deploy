@@ -1,0 +1,16 @@
+kubectl create deployment source-ip-app --image=k8s.gcr.io/echoserver:1.4
+
+kubectl expose deployment source-ip-app --name=clusterip --port=80 --target-port=8080
+
+kubectl run busybox -it --image=busybox --restart=Never --rm
+
+# ip addr
+
+# wget -q0 - <CLUSTER-IP>
+
+# OUTPUT
+# client_address=<CLUSTER-IP>
+
+# The client_address is always the client pod's   IP address (cluster IP) in side the client pod and server pod are in the same node or in different nodes 
+
+  
